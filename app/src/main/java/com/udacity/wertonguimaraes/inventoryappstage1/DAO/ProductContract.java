@@ -6,9 +6,9 @@ import android.provider.BaseColumns;
  * Created by wertonguimaraes on 31/01/18.
  */
 
-public final class Contract {
+public final class ProductContract {
 
-    private Contract() {
+    private ProductContract() {
     }
 
     public static class ContractEntry implements BaseColumns {
@@ -34,7 +34,5 @@ public final class Contract {
                         ContractEntry.COLUMN_CONTACT_EMAIL + " TEXT," +
                         ContractEntry.COLUMN_CONTACT_PHONE + " TEXT)";
 
-        public static final String SQL_DELETE_POSTS =
-                "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 }

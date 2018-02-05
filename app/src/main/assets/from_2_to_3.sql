@@ -1,0 +1,1 @@
+ALTER TABLE items_information RENAME TO items;

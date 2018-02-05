@@ -1,19 +1,21 @@
 package com.udacity.wertonguimaraes.inventoryappstage1.activity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.udacity.wertonguimaraes.inventoryappstage1.DAO.DbHelper;
+import com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductDbHelper;
 import com.udacity.wertonguimaraes.inventoryappstage1.R;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTotalItems;
     private Button mAddItems;
-    private DbHelper dbHelper;
+    private ProductDbHelper dbHelper;
+    private Cursor mCursorAllItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mInitDatabase() {
-        dbHelper = new DbHelper(getApplicationContext());
+        dbHelper = new ProductDbHelper(getApplicationContext());
     }
 
     private void mInitView() {
@@ -55,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void updateTotalItemsTextView() {
-        mTotalItems.setText(String.valueOf(dbHelper.countItems()));
+        mCursorAllItems = dbHelper.getAllDataCursor();
+        int totalItems = mCursorAllItems.getCount();
+        mTotalItems.setText(String.valueOf(totalItems));
+        mCursorAllItems.close();
     }
 }
