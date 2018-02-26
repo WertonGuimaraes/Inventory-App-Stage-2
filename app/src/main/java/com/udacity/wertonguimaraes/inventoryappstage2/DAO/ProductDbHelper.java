@@ -1,4 +1,4 @@
-package com.udacity.wertonguimaraes.inventoryappstage1.DAO;
+package com.udacity.wertonguimaraes.inventoryappstage2.DAO;
 
 
 import android.content.ContentValues;
@@ -15,15 +15,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import static com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductContract.ContractEntry.COLUMN_CONTACT_EMAIL;
-import static com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductContract.ContractEntry.COLUMN_CONTACT_NAME;
-import static com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductContract.ContractEntry.COLUMN_CONTACT_PHONE;
-import static com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_IMAGE;
-import static com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_NAME;
-import static com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_PRICE;
-import static com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_QUANTITY;
-import static com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductContract.ContractEntry.SQL_CREATE_POSTS;
-import static com.udacity.wertonguimaraes.inventoryappstage1.DAO.ProductContract.ContractEntry.TABLE_NAME;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_CONTACT_EMAIL;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_CONTACT_NAME;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_CONTACT_PHONE;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_IMAGE;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_NAME;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_PRICE;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_QUANTITY;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.SQL_CREATE_POSTS;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.TABLE_NAME;
 
 /**
  * Created by wertonguimaraes on 31/01/18.

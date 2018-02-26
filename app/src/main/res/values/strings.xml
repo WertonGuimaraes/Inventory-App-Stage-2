@@ -1,6 +1,26 @@
 <resources>
     <string name="app_name">Inventory App  Stage 1</string>
     <string name="add_item">Add Item</string>
+    <string name="list_items">List Items</string>
+    <string name="product_info">Product Info</string>
+    <string name="contact_info">Contact Info</string>
+
+    <string name="product_name">Product Name</string>
+    <string name="product_name_hint">Insert here the product name</string>
+    <string name="product_price">Product Price</string>
+    <string name="product_price_hint">Insert here the product price</string>
+    <string name="product_quantity">Product Quantity</string>
+    <string name="product_quantity_hint">Insert here the product quantity</string>
+    <string name="product_image">Product Image</string>
+    <string name="product_image_hint">Insert here the product image</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="contact_name_hint">Insert here the contact name</string>
+    <string name="contact_email">Contact Email</string>
+    <string name="contact_email_hint">Insert here the contact email</string>
+    <string name="contact_phone">Contact Phone</string>
+    <string name="contact_phone_hint">Insert here the contact phone</string>
+
+
     <string name="total_items">Total Item Added:\ </string>
     <string name="undefined">undefined</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.udacity.wertonguimaraes.inventoryappstage1;
+package com.udacity.wertonguimaraes.inventoryappstage2;
 
 import org.junit.Test;
 

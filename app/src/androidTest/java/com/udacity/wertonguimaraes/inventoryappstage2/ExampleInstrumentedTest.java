@@ -1,4 +1,4 @@
-package com.udacity.wertonguimaraes.inventoryappstage1;
+package com.udacity.wertonguimaraes.inventoryappstage2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.udacity.wertonguimaraes.inventoryappstage1", appContext.getPackageName());
+        assertEquals("com.udacity.wertonguimaraes.inventoryappstage2", appContext.getPackageName());
     }
 }

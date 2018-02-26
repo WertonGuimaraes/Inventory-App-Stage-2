@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.udacity.wertonguimaraes.inventoryappstage1">
+    package="com.udacity.wertonguimaraes.inventoryappstage2">
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.ItemsListActivity"
+            android:label="@string/list_items" />
+        <activity
+            android:name=".activity.AddItemActivity"
+            android:label="@string/add_item" />
     </application>
 
 </manifest>

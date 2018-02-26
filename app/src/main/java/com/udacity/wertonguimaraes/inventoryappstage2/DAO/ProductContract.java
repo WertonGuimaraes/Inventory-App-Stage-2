@@ -1,4 +1,4 @@
-package com.udacity.wertonguimaraes.inventoryappstage1.DAO;
+package com.udacity.wertonguimaraes.inventoryappstage2.DAO;
 
 import android.provider.BaseColumns;
 
