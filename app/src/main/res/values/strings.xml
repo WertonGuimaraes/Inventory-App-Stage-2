@@ -12,7 +12,7 @@
     <string name="product_quantity">Product Quantity</string>
     <string name="product_quantity_hint">Insert here the product quantity</string>
     <string name="product_image">Product Image</string>
-    <string name="product_image_hint">Insert here the product image</string>
+    <string name="product_image_hint">Image of product.</string>
     <string name="contact_name">Contact Name</string>
     <string name="contact_name_hint">Insert here the contact name</string>
     <string name="contact_email">Contact Email</string>
@@ -20,6 +20,8 @@
     <string name="contact_phone">Contact Phone</string>
     <string name="contact_phone_hint">Insert here the contact phone</string>
 
+    <string name="price">Price: %1$s</string>
+    <string name="quantity">Quantity: %1$s</string>
 
     <string name="total_items">Total Item Added:\ </string>
     <string name="undefined">undefined</string>

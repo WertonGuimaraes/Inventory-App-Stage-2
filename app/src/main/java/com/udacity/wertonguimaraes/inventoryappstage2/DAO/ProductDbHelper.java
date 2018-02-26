@@ -7,10 +7,12 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -109,15 +111,19 @@ public class ProductDbHelper extends SQLiteOpenHelper {
     }
 
     public void insertItem(String productName, double productPrice, int productQuantity,
-                           String productImage, String contactName, String contactEmail,
+                           Bitmap productImage, String contactName, String contactEmail,
                            String contactPhone) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        productImage.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        byte[] productImageByte = bos.toByteArray();
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_PRODUCT_NAME, productName);
         values.put(COLUMN_PRODUCT_PRICE, productPrice);
         values.put(COLUMN_PRODUCT_QUANTITY, productQuantity);
-        values.put(COLUMN_PRODUCT_IMAGE, productImage);
+        values.put(COLUMN_PRODUCT_IMAGE, productImageByte);
         values.put(COLUMN_CONTACT_NAME, contactName);
         values.put(COLUMN_CONTACT_EMAIL, contactEmail);
         values.put(COLUMN_CONTACT_PHONE, contactPhone);

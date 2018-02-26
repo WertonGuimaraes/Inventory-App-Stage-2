@@ -26,13 +26,12 @@ public final class ProductContract {
         public static final String SQL_CREATE_POSTS =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         ContractEntry._ID + " INTEGER PRIMARY KEY," +
-                        ContractEntry.COLUMN_PRODUCT_NAME + " TEXT," +
-                        ContractEntry.COLUMN_PRODUCT_PRICE + " REAL," +
-                        ContractEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER," +
-                        ContractEntry.COLUMN_PRODUCT_IMAGE + " TEXT," +
-                        ContractEntry.COLUMN_CONTACT_NAME + " TEXT," +
-                        ContractEntry.COLUMN_CONTACT_EMAIL + " TEXT," +
-                        ContractEntry.COLUMN_CONTACT_PHONE + " TEXT)";
-
+                        ContractEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL," +
+                        ContractEntry.COLUMN_PRODUCT_PRICE + " REAL NOT NULL," +
+                        ContractEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL," +
+                        ContractEntry.COLUMN_PRODUCT_IMAGE + " BLOB NOT NULL," +
+                        ContractEntry.COLUMN_CONTACT_NAME + " TEXT NOT NULL," +
+                        ContractEntry.COLUMN_CONTACT_EMAIL + " TEXT NOT NULL," +
+                        ContractEntry.COLUMN_CONTACT_PHONE + " TEXT NOT NULL)";
     }
 }

@@ -5,26 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:weightSum="10"
     tools:context="com.udacity.wertonguimaraes.inventoryappstage2.activity.MainActivity">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:id="@+id/product_image"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:paddingEnd="10dp"
         app:srcCompat="@android:drawable/btn_star" />
 
     <LinearLayout
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:textSize="20sp" />
 
         <TextView
@@ -32,13 +32,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:text="Price: $12.20"/>
+            android:text="Undefined"/>
 
         <TextView
             android:id="@+id/product_quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:text="Quantity: 10"/>
+            android:text="Undefined"/>
     </LinearLayout>
 </LinearLayout>
