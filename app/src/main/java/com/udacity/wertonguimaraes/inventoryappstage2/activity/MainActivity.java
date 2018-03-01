@@ -1,19 +1,27 @@
 package com.udacity.wertonguimaraes.inventoryappstage2.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductDbHelper;
 import com.udacity.wertonguimaraes.inventoryappstage2.R;
+import com.udacity.wertonguimaraes.inventoryappstage2.adapter.ProductListAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mAddItems;
-    private Button mListItems;
+    private RecyclerView mRvItem;
+    private ProductListAdapter mProductAdapter;
+    private TextView mTotalItems;
     private ProductDbHelper dbHelper;
+    private Cursor mCursorAllItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
         mInitDatabase();
         mInitView();
-        mInitButtonListeners();
+        populateRecyclerView();
+        updateTotalItemsTextView();
     }
 
     private void mInitDatabase() {
@@ -30,34 +39,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mInitView() {
-        mAddItems = findViewById(R.id.add_item);
-        mListItems = findViewById(R.id.view_items);
+        mRvItem = findViewById(R.id.recycler_view);
+        mTotalItems = findViewById(R.id.total_items);
     }
 
-    private void mInitButtonListeners() {
-        mAddItems.setOnClickListener(mAddItemListener);
-        mListItems.setOnClickListener(mListItemsListener);
+    private void populateRecyclerView() {
+        mRvItem.setLayoutManager(new LinearLayoutManager(this));
+        mProductAdapter = new ProductListAdapter(getApplicationContext(), dbHelper.getAllDataCursor());
+        mRvItem.setAdapter(mProductAdapter);
     }
 
-    private View.OnClickListener mAddItemListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            startActivity(new Intent(getApplicationContext(), AddItemActivity.class));
-//            dbHelper.insertItem(
-//                    "Smart TV",
-//                    2999.99,
-//                    5,
-//                    "http://s3.amazonaws.com/digitaltrends-uploads-prod/2013/02/Samsung-Smart-Tv.jpg",
-//                    "Werton Guimaraes",
-//                    "werton007@gmail.com",
-//                    "+55 83 99652XXXX");
-        }
-    };
+    private void updateTotalItemsTextView() {
+        mCursorAllItems = dbHelper.getAllDataCursor();
+        int totalItems = mCursorAllItems.getCount();
+        mTotalItems.setText(String.valueOf(totalItems));
+        mCursorAllItems.close();
+    }
 
-    private View.OnClickListener mListItemsListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            startActivity(new Intent(getApplicationContext(), ItemsListActivity.class));
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateRecyclerView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_acitvity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case (R.id.action_add):
+                startActivity(new Intent(getApplicationContext(), AddProductActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
-    };
+    }
 }

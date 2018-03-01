@@ -17,11 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ItemsListActivity"
-            android:label="@string/list_items" />
+            android:name=".activity.AddProductActivity"
+            android:label="@string/add_product" />
         <activity
-            android:name=".activity.AddItemActivity"
-            android:label="@string/add_item" />
+            android:name=".activity.ViewProductActivity"
+            android:label="@string/view_product" />
+
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

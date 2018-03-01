@@ -19,7 +19,7 @@ import com.udacity.wertonguimaraes.inventoryappstage2.R;
 
 import java.io.FileNotFoundException;
 
-public class AddItemActivity extends AppCompatActivity {
+public class AddProductActivity extends AppCompatActivity {
 
     private EditText mProductName;
     private EditText mProductPrice;
@@ -37,7 +37,7 @@ public class AddItemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_item);
+        setContentView(R.layout.activity_add_product);
 
         mInitView();
         mInitDatabase();
