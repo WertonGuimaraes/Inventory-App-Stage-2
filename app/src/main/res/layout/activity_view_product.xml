@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,10 +12,103 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/bt_save_item"
+        <ImageView
+            android:id="@+id/iv_product_image"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            app:srcCompat="@drawable/product_image" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            style="@style/TopicStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Item" />
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/undefined"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            style="@style/CardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/undefined"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            style="@style/CardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/tv_product_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:gravity="center_vertical"
+                android:text="@string/undefined"
+                android:textSize="17sp" />
+
+            <ImageButton
+                android:id="@+id/iv_add_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/action_add_product" />
+
+            <ImageButton
+                android:id="@+id/iv_remove_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/action_remove_product" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/TopicStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/contact_info"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            style="@style/CardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_contact_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/undefined"
+                android:textSize="17sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/tv_contact_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/undefined"
+                android:textSize="17sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/tv_contact_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/undefined"
+                android:textSize="17sp"
+                android:textStyle="italic" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

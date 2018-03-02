@@ -21,9 +21,13 @@
     <string name="contact_phone">Contact Phone</string>
     <string name="contact_phone_hint">e.g.: +55 83 9 9652\-1215</string>
 
-    <string name="price">Price: %1$f</string>
-    <string name="quantity">Quantity: %1$d</string>
+    <string name="price_text">Price: %1$.2f</string>
+    <string name="quantity_text">Quantity: %1$d</string>
+    <string name="contact_name_text">Contact Name: %1$s</string>
+    <string name="contact_email_text">Contact Email: %1$s</string>
+    <string name="contact_phone_text">Contact Phone: %1$s</string>
 
     <string name="total_products">Total Products Added:\ </string>
     <string name="undefined">undefined</string>
+    <string name="edit_product">Edit Product</string>
 </resources>

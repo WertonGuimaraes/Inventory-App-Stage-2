@@ -1,7 +1,6 @@
 package com.udacity.wertonguimaraes.inventoryappstage2.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.udacity.wertonguimaraes.inventoryappstage2.R;
 import com.udacity.wertonguimaraes.inventoryappstage2.activity.ViewProductActivity;
@@ -41,8 +39,8 @@ public class ProductListAdapter extends CursorRecyclerViewAdapter<ProductListAda
         Resources res = mContext.getResources();
         Product product = Convert.cursorInProduct(cursor);
 
-        String price_text = String.format(res.getString(R.string.price), product.getProductPrice());
-        String quantity_text = String.format(res.getString(R.string.quantity), product.getProductQuantity());
+        String price_text = String.format(res.getString(R.string.price_text), product.getProductPrice());
+        String quantity_text = String.format(res.getString(R.string.quantity_text), product.getProductQuantity());
 
         viewHolder.productNameView.setText(product.getProductName());
         viewHolder.productPriceView.setText(price_text);
@@ -68,18 +66,7 @@ public class ProductListAdapter extends CursorRecyclerViewAdapter<ProductListAda
 
         @Override
         public void onClick(View v) {
-            Context context = v.getContext();
-
-            getCursor().moveToPosition(getLayoutPosition());
-            Product product = Convert.cursorInProduct(getCursor());
-
-            Toast toast = Toast.makeText(context, product.getProductName(), Toast.LENGTH_SHORT);
-            toast.show();
-
-            Intent i = new Intent(mContext, ViewProductActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            mContext.startActivity(i);
+            ViewProductActivity.start(mContext, getLayoutPosition());
         }
     }
 }
