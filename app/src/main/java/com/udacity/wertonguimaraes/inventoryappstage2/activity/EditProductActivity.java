@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +19,6 @@ import com.udacity.wertonguimaraes.inventoryappstage2.util.Convert;
 public class EditProductActivity extends AddProductActivity {
 
     private static final String PRODUCT_ID = "productPosition";
-    protected Button mEditItem;
     private Product mProduct;
 
     public static void start(Context context, int productPosition) {
@@ -44,12 +45,6 @@ public class EditProductActivity extends AddProductActivity {
         cursor.close();
     }
 
-    @Override
-    protected void initView() {
-        super.initView();
-        mEditItem = findViewById(R.id.bt_save_item);
-    }
-
     private void populateView() {
         productName.setText(mProduct.getProductName());
         productPrice.setText(String.valueOf(mProduct.getProductPrice()));
@@ -58,12 +53,9 @@ public class EditProductActivity extends AddProductActivity {
         contactEmail.setText(mProduct.getContactEmail());
         contactPhone.setText(mProduct.getContactPhone());
         productImage.setImageBitmap(mProduct.getProductImage());
-
-        mEditItem.setText(R.string.edit_product);
     }
 
     private void initButtonListeners() {
-        mEditItem.setOnClickListener(mEditItemListener);
         editProductImage.setOnClickListener(mEditImageProductListener);
     }
 
@@ -98,10 +90,39 @@ public class EditProductActivity extends AddProductActivity {
     };
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.edit_acitvity, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+        switch (item.getItemId()) {
+            case (android.R.id.home):
+                Toast.makeText(getApplicationContext()," aaa", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+                return true;
+            case (R.id.action_edit):
+                if (allFieldsWasFilled()) {
+                    mProduct.setProductName(productName.getText().toString());
+                    mProduct.setProductPrice(Double.parseDouble(productPrice.getText().toString()));
+                    mProduct.setProductQuantity(Integer.parseInt(productQuantity.getText().toString()));
+                    mProduct.setProductImage(((BitmapDrawable) productImage.getDrawable()).getBitmap());
+                    mProduct.setContactName(contactName.getText().toString());
+                    mProduct.setContactEmail(contactEmail.getText().toString());
+                    mProduct.setContactPhone(contactPhone.getText().toString());
+
+                    dbHelper.updateItem(mProduct);
+                    Toast.makeText(getApplicationContext(), getString(R.string.product_edited_successfully), Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.info_product_not_complete), Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
-        return super.onOptionsItemSelected(item);
     }
 }

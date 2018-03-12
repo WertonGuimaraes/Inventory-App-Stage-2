@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
+    android:background="@drawable/background"
     tools:context="com.udacity.wertonguimaraes.inventoryappstage2.activity.MainActivity">
 
     <LinearLayout
@@ -18,15 +19,5 @@
             android:layout_height="20dp" />
 
         <include layout="@layout/form_contact" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <Button
-            android:id="@+id/bt_save_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save_product" />
     </LinearLayout>
 </ScrollView>

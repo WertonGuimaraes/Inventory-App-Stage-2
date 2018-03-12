@@ -7,6 +7,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +34,6 @@ public class AddProductActivity extends AppCompatActivity {
     protected ImageView productImage;
     protected ImageView editProductImage;
 
-    protected Button addItem;
     protected ProductDbHelper dbHelper;
 
     @Override
@@ -60,36 +61,11 @@ public class AddProductActivity extends AppCompatActivity {
 
         productImage = findViewById(R.id.iv_product_image);
         editProductImage = findViewById(R.id.edit_product_image);
-
-        addItem = findViewById(R.id.bt_save_item);
     }
 
     private void initButtonListeners() {
-        addItem.setOnClickListener(addItemListener);
         editProductImage.setOnClickListener(editImageProductListener);
     }
-
-    private View.OnClickListener addItemListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (allFieldsWasFilled()) {
-                Product product = new Product(null,
-                        productName.getText().toString(),
-                        Double.parseDouble(productPrice.getText().toString()),
-                        Integer.parseInt(productQuantity.getText().toString()),
-                        ((BitmapDrawable) productImage.getDrawable()).getBitmap(),
-                        contactName.getText().toString(),
-                        contactEmail.getText().toString(),
-                        contactPhone.getText().toString());
-
-                dbHelper.insertItem(product);
-                Toast.makeText(getApplicationContext(), getString(R.string.product_added_successfully), Toast.LENGTH_SHORT).show();
-                onBackPressed();
-            } else {
-                Toast.makeText(getApplicationContext(), getString(R.string.info_product_not_complete), Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 
     private View.OnClickListener editImageProductListener = new View.OnClickListener() {
         @Override
@@ -110,11 +86,40 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.create_acitvity, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+        switch (item.getItemId()) {
+            case (android.R.id.home):
+                onBackPressed();
+                return true;
+            case (R.id.action_confirm_create):
+                if (allFieldsWasFilled()) {
+                    Product product = new Product(null,
+                            productName.getText().toString(),
+                            Double.parseDouble(productPrice.getText().toString()),
+                            Integer.parseInt(productQuantity.getText().toString()),
+                            ((BitmapDrawable) productImage.getDrawable()).getBitmap(),
+                            contactName.getText().toString(),
+                            contactEmail.getText().toString(),
+                            contactPhone.getText().toString());
+
+                    dbHelper.insertItem(product);
+                    Toast.makeText(getApplicationContext(), getString(R.string.product_added_successfully), Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.info_product_not_complete), Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
