@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract;
 import com.udacity.wertonguimaraes.inventoryappstage2.R;
 import com.udacity.wertonguimaraes.inventoryappstage2.activity.ViewProductActivity;
 import com.udacity.wertonguimaraes.inventoryappstage2.model.Product;
@@ -66,7 +67,10 @@ public class ProductListAdapter extends CursorRecyclerViewAdapter<ProductListAda
 
         @Override
         public void onClick(View v) {
-            ViewProductActivity.start(mContext, getLayoutPosition());
+            Cursor cursor =  getCursor();
+            cursor.moveToPosition(getLayoutPosition());
+            int product_id = cursor.getInt(cursor.getColumnIndex(ProductContract.ContractEntry._ID));
+            ViewProductActivity.start(mContext, product_id);
         }
     }
 }

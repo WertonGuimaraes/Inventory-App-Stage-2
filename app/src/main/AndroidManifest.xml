@@ -22,6 +22,9 @@
         <activity
             android:name=".activity.ViewProductActivity"
             android:label="@string/view_product" />
+        <activity
+            android:name=".activity.EditProductActivity"
+            android:label="@string/edit_product" />
 
     </application>
 

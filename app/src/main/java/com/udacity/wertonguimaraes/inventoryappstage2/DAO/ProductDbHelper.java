@@ -11,6 +11,8 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.udacity.wertonguimaraes.inventoryappstage2.model.Product;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,6 +28,7 @@ import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract
 import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_QUANTITY;
 import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.SQL_CREATE_POSTS;
 import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.TABLE_NAME;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry._ID;
 
 /**
  * Created by wertonguimaraes on 31/01/18.
@@ -110,31 +113,16 @@ public class ProductDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertItem(String productName, double productPrice, int productQuantity,
-                           Bitmap productImage, String contactName, String contactEmail,
-                           String contactPhone) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        productImage.compress(Bitmap.CompressFormat.PNG, 100, bos);
-        byte[] productImageByte = bos.toByteArray();
-
+    public void insertItem(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(COLUMN_PRODUCT_NAME, productName);
-        values.put(COLUMN_PRODUCT_PRICE, productPrice);
-        values.put(COLUMN_PRODUCT_QUANTITY, productQuantity);
-        values.put(COLUMN_PRODUCT_IMAGE, productImageByte);
-        values.put(COLUMN_CONTACT_NAME, contactName);
-        values.put(COLUMN_CONTACT_EMAIL, contactEmail);
-        values.put(COLUMN_CONTACT_PHONE, contactPhone);
-
+        ContentValues values = productContentValues(product);
         db.insert(TABLE_NAME, null, values);
     }
 
     public Cursor getAllDataCursor() {
         SQLiteDatabase readDB = this.getReadableDatabase();
 
-        Cursor cursor = readDB.query(
+        return readDB.query(
                 TABLE_NAME,
                 null,
                 null,
@@ -143,7 +131,62 @@ public class ProductDbHelper extends SQLiteOpenHelper {
                 null,
                 null
         );
+    }
 
+    public Cursor getProductCursorById(int product_id) {
+        SQLiteDatabase readDB = this.getReadableDatabase();
+
+        String selection = _ID + "=?";
+        String[] selectionArgs = new String[]{String.valueOf(product_id)};
+
+        Cursor cursor = readDB.query(
+                TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        cursor.moveToFirst();
         return cursor;
     }
+
+    public void updateItemQuantity(long id, int quantity) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCT_QUANTITY, quantity);
+        String selection = _ID + "=?";
+        String[] selectionArgs = new String[]{String.valueOf(id)};
+        db.update(TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updateItem(Product product) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = productContentValues(product);
+        String selection = _ID + "=?";
+        String[] selectionArgs = new String[]{String.valueOf(product.getId())};
+        db.update(TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    private ContentValues productContentValues(Product product) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        product.getProductImage().compress(Bitmap.CompressFormat.PNG, 100, bos);
+        byte[] productImageByte = bos.toByteArray();
+
+        Log.d("wertonLOG", "product.getProductName(): " + product.getProductName());
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCT_NAME, product.getProductName());
+        values.put(COLUMN_PRODUCT_PRICE, product.getProductPrice());
+        values.put(COLUMN_PRODUCT_QUANTITY, product.getProductQuantity());
+        values.put(COLUMN_PRODUCT_IMAGE, productImageByte);
+        values.put(COLUMN_CONTACT_NAME, product.getContactName());
+        values.put(COLUMN_CONTACT_EMAIL, product.getContactEmail());
+        values.put(COLUMN_CONTACT_PHONE, product.getContactPhone());
+
+        return values;
+    }
+
 }

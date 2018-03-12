@@ -16,40 +16,41 @@ import android.widget.Toast;
 
 import com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductDbHelper;
 import com.udacity.wertonguimaraes.inventoryappstage2.R;
+import com.udacity.wertonguimaraes.inventoryappstage2.model.Product;
 
 import java.io.FileNotFoundException;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    private EditText mProductName;
-    private EditText mProductPrice;
-    private EditText mProductQuantity;
-    private EditText mContactName;
-    private EditText mContactEmail;
-    private EditText mContactPhone;
+    protected EditText mProductName;
+    protected EditText mProductPrice;
+    protected EditText mProductQuantity;
+    protected EditText mContactName;
+    protected EditText mContactEmail;
+    protected EditText mContactPhone;
 
-    private ImageView mProductImage;
-    private ImageView mEditProductImage;
+    protected ImageView mProductImage;
+    protected ImageView mEditProductImage;
 
-    private Button mAddItem;
-    private ProductDbHelper dbHelper;
+    protected Button mAddItem;
+    protected ProductDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
 
-        mInitView();
-        mInitDatabase();
-        mInitButtonListeners();
+        initView();
+        initDatabase();
+        initButtonListeners();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void mInitDatabase() {
-        dbHelper = new ProductDbHelper(getApplicationContext());
+    private void initDatabase() {
+        mDbHelper = new ProductDbHelper(getApplicationContext());
     }
 
-    private void mInitView() {
+    protected void initView() {
         mProductName = findViewById(R.id.et_product_name);
         mProductPrice = findViewById(R.id.et_product_price);
         mProductQuantity = findViewById(R.id.et_product_quantity);
@@ -63,7 +64,7 @@ public class AddProductActivity extends AppCompatActivity {
         mAddItem = findViewById(R.id.bt_save_item);
     }
 
-    private void mInitButtonListeners() {
+    private void initButtonListeners() {
         mAddItem.setOnClickListener(mAddItemListener);
         mEditProductImage.setOnClickListener(mEditImageProductListener);
     }
@@ -72,7 +73,7 @@ public class AddProductActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (allFieldsWasFilled()) {
-                dbHelper.insertItem(
+                Product product = new Product(null,
                         mProductName.getText().toString(),
                         Double.parseDouble(mProductPrice.getText().toString()),
                         Integer.parseInt(mProductQuantity.getText().toString()),
@@ -80,6 +81,8 @@ public class AddProductActivity extends AppCompatActivity {
                         mContactName.getText().toString(),
                         mContactEmail.getText().toString(),
                         mContactPhone.getText().toString());
+
+                mDbHelper.insertItem(product);
                 Toast.makeText(getApplicationContext(), "Item added successfully.", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             } else {
@@ -97,7 +100,7 @@ public class AddProductActivity extends AppCompatActivity {
         }
     };
 
-    private boolean allFieldsWasFilled(){
+    protected boolean allFieldsWasFilled() {
         return isFilled(mProductName) && isFilled(mProductPrice) && isFilled(mProductQuantity) &&
                 isFilled(mContactName) && isFilled(mContactEmail) && isFilled(mContactPhone);
     }
