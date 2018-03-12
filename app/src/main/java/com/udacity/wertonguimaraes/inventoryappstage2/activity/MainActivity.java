@@ -1,7 +1,6 @@
 package com.udacity.wertonguimaraes.inventoryappstage2.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductDbHelper;
@@ -18,10 +18,8 @@ import com.udacity.wertonguimaraes.inventoryappstage2.adapter.ProductListAdapter
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRvItem;
-    private ProductListAdapter mProductAdapter;
-    private TextView mTotalItems;
     private ProductDbHelper dbHelper;
-    private Cursor mCursorAllItems;
+    private TextView mInfoNoProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         mInitDatabase();
         mInitView();
-        populateRecyclerView();
-        updateTotalItemsTextView();
+        showData();
     }
 
     private void mInitDatabase() {
@@ -40,26 +37,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void mInitView() {
         mRvItem = findViewById(R.id.recycler_view);
-        mTotalItems = findViewById(R.id.total_items);
+        mInfoNoProduct = findViewById(R.id.no_product_info);
     }
 
     private void populateRecyclerView() {
         mRvItem.setLayoutManager(new LinearLayoutManager(this));
-        mProductAdapter = new ProductListAdapter(getApplicationContext(), dbHelper.getAllDataCursor());
-        mRvItem.setAdapter(mProductAdapter);
-    }
-
-    private void updateTotalItemsTextView() {
-        mCursorAllItems = dbHelper.getAllDataCursor();
-        int totalItems = mCursorAllItems.getCount();
-        mTotalItems.setText(String.valueOf(totalItems));
-        mCursorAllItems.close();
+        ProductListAdapter productAdapter = new ProductListAdapter(getApplicationContext(), dbHelper.getAllDataCursor());
+        mRvItem.setAdapter(productAdapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        populateRecyclerView();
+        showData();
+    }
+
+    private void showData() {
+        if (dbHelper.getAllDataCursor().getCount() > 0) {
+            mInfoNoProduct.setVisibility(View.GONE);
+            populateRecyclerView();
+        } else {
+            mInfoNoProduct.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

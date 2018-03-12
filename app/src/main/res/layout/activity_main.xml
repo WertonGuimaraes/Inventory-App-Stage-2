@@ -7,25 +7,12 @@
     android:padding="10dp"
     tools:context="com.udacity.wertonguimaraes.inventoryappstage2.activity.MainActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="30dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="@string/total_products" />
-
-        <TextView
-            android:id="@+id/total_items"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="@string/undefined" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/no_product_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_product_info" />
 
     <include layout="@layout/recycler_view" />
 </LinearLayout>

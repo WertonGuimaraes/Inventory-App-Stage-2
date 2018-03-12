@@ -14,6 +14,7 @@ import com.udacity.wertonguimaraes.inventoryappstage2.model.Product;
 public class Convert {
 
     public static Product cursorInProduct(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndex(ProductContract.ContractEntry._ID));
         String name = cursor.getString(cursor.getColumnIndex(ProductContract.ContractEntry.COLUMN_PRODUCT_NAME));
         double price = cursor.getDouble(cursor.getColumnIndex(ProductContract.ContractEntry.COLUMN_PRODUCT_PRICE));
         int quantity = cursor.getInt(cursor.getColumnIndex(ProductContract.ContractEntry.COLUMN_PRODUCT_QUANTITY));
@@ -23,6 +24,6 @@ public class Convert {
         String contactPhone = cursor.getString(cursor.getColumnIndex(ProductContract.ContractEntry.COLUMN_CONTACT_PHONE));
 
         Bitmap imageBitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
-        return new Product(name, price, quantity, imageBitmap, contactName, contactEmail, contactPhone);
+        return new Product(id, name, price, quantity, imageBitmap, contactName, contactEmail, contactPhone);
     }
 }

@@ -2,10 +2,8 @@
     <string name="app_name">Inventory App Stage 2</string>
     <string name="add_product">Add Product</string>
     <string name="view_product">View Product</string>
-    <string name="list_products">List Products</string>
     <string name="product_info">Product Info</string>
     <string name="contact_info">Contact Info</string>
-
     <string name="product_name">Product Name</string>
     <string name="product_name_hint">e.g.: Camera</string>
     <string name="product_price">Product Price</string>
@@ -20,14 +18,21 @@
     <string name="contact_email_hint">e.g.: werton@gmail.com</string>
     <string name="contact_phone">Contact Phone</string>
     <string name="contact_phone_hint">e.g.: +55 83 9 9652\-1215</string>
-
     <string name="price_text">Price: %1$.2f</string>
     <string name="quantity_text">Quantity: %1$d</string>
     <string name="contact_name_text">Contact Name: %1$s</string>
     <string name="contact_email_text">Contact Email: %1$s</string>
     <string name="contact_phone_text">Contact Phone: %1$s</string>
-
-    <string name="total_products">Total Products Added:\ </string>
     <string name="undefined">undefined</string>
     <string name="edit_product">Edit Product</string>
+    <string name="delete_product">Delete Product</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="quantity_less_than_zero">You can\'t have a quantity less than zero.</string>
+    <string name="no_product_info">To add products, click in \"add product\" in action bar.</string>
+    <string name="save_product">Save Product</string>
+    <string name="product_added_successfully">Product added successfully.</string>
+    <string name="info_product_not_complete">There are fields that need filled.</string>
+    <string name="product_edited_successfully">Product edited successfully.</string>
+    <string name="product_deleted_message">The product "%1$s" was removed with success.</string>
 </resources>

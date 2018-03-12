@@ -16,79 +16,82 @@ import android.widget.Toast;
 
 import com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductDbHelper;
 import com.udacity.wertonguimaraes.inventoryappstage2.R;
+import com.udacity.wertonguimaraes.inventoryappstage2.model.Product;
 
 import java.io.FileNotFoundException;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    private EditText mProductName;
-    private EditText mProductPrice;
-    private EditText mProductQuantity;
-    private EditText mContactName;
-    private EditText mContactEmail;
-    private EditText mContactPhone;
+    protected EditText productName;
+    protected EditText productPrice;
+    protected EditText productQuantity;
+    protected EditText contactName;
+    protected EditText contactEmail;
+    protected EditText contactPhone;
 
-    private ImageView mProductImage;
-    private ImageView mEditProductImage;
+    protected ImageView productImage;
+    protected ImageView editProductImage;
 
-    private Button mAddItem;
-    private ProductDbHelper dbHelper;
+    protected Button addItem;
+    protected ProductDbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
 
-        mInitView();
-        mInitDatabase();
-        mInitButtonListeners();
+        initView();
+        initDatabase();
+        initButtonListeners();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void mInitDatabase() {
+    private void initDatabase() {
         dbHelper = new ProductDbHelper(getApplicationContext());
     }
 
-    private void mInitView() {
-        mProductName = findViewById(R.id.et_product_name);
-        mProductPrice = findViewById(R.id.et_product_price);
-        mProductQuantity = findViewById(R.id.et_product_quantity);
-        mContactName = findViewById(R.id.et_contact_name);
-        mContactEmail = findViewById(R.id.et_contact_email);
-        mContactPhone = findViewById(R.id.et_contact_phone);
+    protected void initView() {
+        productName = findViewById(R.id.et_product_name);
+        productPrice = findViewById(R.id.et_product_price);
+        productQuantity = findViewById(R.id.et_product_quantity);
+        contactName = findViewById(R.id.et_contact_name);
+        contactEmail = findViewById(R.id.et_contact_email);
+        contactPhone = findViewById(R.id.et_contact_phone);
 
-        mProductImage = findViewById(R.id.iv_product_image);
-        mEditProductImage = findViewById(R.id.edit_product_image);
+        productImage = findViewById(R.id.iv_product_image);
+        editProductImage = findViewById(R.id.edit_product_image);
 
-        mAddItem = findViewById(R.id.bt_save_item);
+        addItem = findViewById(R.id.bt_save_item);
     }
 
-    private void mInitButtonListeners() {
-        mAddItem.setOnClickListener(mAddItemListener);
-        mEditProductImage.setOnClickListener(mEditImageProductListener);
+    private void initButtonListeners() {
+        addItem.setOnClickListener(addItemListener);
+        editProductImage.setOnClickListener(editImageProductListener);
     }
 
-    private View.OnClickListener mAddItemListener = new View.OnClickListener() {
+    private View.OnClickListener addItemListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (allFieldsWasFilled()) {
-                dbHelper.insertItem(
-                        mProductName.getText().toString(),
-                        Double.parseDouble(mProductPrice.getText().toString()),
-                        Integer.parseInt(mProductQuantity.getText().toString()),
-                        ((BitmapDrawable) mProductImage.getDrawable()).getBitmap(),
-                        mContactName.getText().toString(),
-                        mContactEmail.getText().toString(),
-                        mContactPhone.getText().toString());
-                Toast.makeText(getApplicationContext(), "Item added successfully.", Toast.LENGTH_SHORT).show();
+                Product product = new Product(null,
+                        productName.getText().toString(),
+                        Double.parseDouble(productPrice.getText().toString()),
+                        Integer.parseInt(productQuantity.getText().toString()),
+                        ((BitmapDrawable) productImage.getDrawable()).getBitmap(),
+                        contactName.getText().toString(),
+                        contactEmail.getText().toString(),
+                        contactPhone.getText().toString());
+
+                dbHelper.insertItem(product);
+                Toast.makeText(getApplicationContext(), getString(R.string.product_added_successfully), Toast.LENGTH_SHORT).show();
                 onBackPressed();
             } else {
-                Toast.makeText(getApplicationContext(), "There are fields that need filled.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.info_product_not_complete), Toast.LENGTH_SHORT).show();
             }
         }
     };
 
-    private View.OnClickListener mEditImageProductListener = new View.OnClickListener() {
+    private View.OnClickListener editImageProductListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(Intent.ACTION_PICK,
@@ -97,9 +100,9 @@ public class AddProductActivity extends AppCompatActivity {
         }
     };
 
-    private boolean allFieldsWasFilled(){
-        return isFilled(mProductName) && isFilled(mProductPrice) && isFilled(mProductQuantity) &&
-                isFilled(mContactName) && isFilled(mContactEmail) && isFilled(mContactPhone);
+    protected boolean allFieldsWasFilled() {
+        return isFilled(productName) && isFilled(productPrice) && isFilled(productQuantity) &&
+                isFilled(contactName) && isFilled(contactEmail) && isFilled(contactPhone);
     }
 
     private boolean isFilled(EditText field) {
@@ -125,7 +128,7 @@ public class AddProductActivity extends AppCompatActivity {
                 Bitmap bitmap;
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                    mProductImage.setImageBitmap(bitmap);
+                    productImage.setImageBitmap(bitmap);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

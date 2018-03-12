@@ -27,6 +27,6 @@
             android:id="@+id/bt_save_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Item" />
+            android:text="@string/save_product" />
     </LinearLayout>
 </ScrollView>
