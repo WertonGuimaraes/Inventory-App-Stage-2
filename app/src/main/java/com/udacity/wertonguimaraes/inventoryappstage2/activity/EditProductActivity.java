@@ -59,27 +59,6 @@ public class EditProductActivity extends AddProductActivity {
         editProductImage.setOnClickListener(mEditImageProductListener);
     }
 
-    private View.OnClickListener mEditItemListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (allFieldsWasFilled()) {
-                mProduct.setProductName(productName.getText().toString());
-                mProduct.setProductPrice(Double.parseDouble(productPrice.getText().toString()));
-                mProduct.setProductQuantity(Integer.parseInt(productQuantity.getText().toString()));
-                mProduct.setProductImage(((BitmapDrawable) productImage.getDrawable()).getBitmap());
-                mProduct.setContactName(contactName.getText().toString());
-                mProduct.setContactEmail(contactEmail.getText().toString());
-                mProduct.setContactPhone(contactPhone.getText().toString());
-
-                dbHelper.updateItem(mProduct);
-                Toast.makeText(getApplicationContext(), getString(R.string.product_edited_successfully), Toast.LENGTH_SHORT).show();
-                onBackPressed();
-            } else {
-                Toast.makeText(getApplicationContext(), getString(R.string.info_product_not_complete), Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
     private View.OnClickListener mEditImageProductListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
