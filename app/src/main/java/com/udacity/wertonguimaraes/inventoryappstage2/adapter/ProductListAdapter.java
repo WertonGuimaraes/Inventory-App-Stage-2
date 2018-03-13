@@ -18,6 +18,9 @@ import com.udacity.wertonguimaraes.inventoryappstage2.R;
 import com.udacity.wertonguimaraes.inventoryappstage2.activity.ViewProductActivity;
 import com.udacity.wertonguimaraes.inventoryappstage2.model.Product;
 import com.udacity.wertonguimaraes.inventoryappstage2.util.Convert;
+import com.udacity.wertonguimaraes.inventoryappstage2.util.Image;
+
+import java.util.List;
 
 /**
  * Created by wertonguimaraes on 22/02/18.
@@ -25,10 +28,12 @@ import com.udacity.wertonguimaraes.inventoryappstage2.util.Convert;
 
 public class ProductListAdapter extends CursorRecyclerViewAdapter<ProductListAdapter.ViewHolder> {
     private Context mContext;
+    private Image image;
 
     public ProductListAdapter(Context context, Cursor cursor) {
         super(cursor);
         mContext = context;
+        image = new Image(context);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class ProductListAdapter extends CursorRecyclerViewAdapter<ProductListAda
         viewHolder.productNameView.setText(product.getProductName());
         viewHolder.productPriceView.setText(priceText);
         viewHolder.productQuantityView.setText(quantityText);
-        viewHolder.productImageView.setImageBitmap(product.getProductImage());
+        image.loadImageFromStorage(product.getProductImageName(), viewHolder.productImageView);
         viewHolder.productSale.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -95,7 +100,5 @@ public class ProductListAdapter extends CursorRecyclerViewAdapter<ProductListAda
             int productId = cursor.getInt(cursor.getColumnIndex(ProductContract.ContractEntry._ID));
             ViewProductActivity.start(mContext, productId);
         }
-
-
     }
 }

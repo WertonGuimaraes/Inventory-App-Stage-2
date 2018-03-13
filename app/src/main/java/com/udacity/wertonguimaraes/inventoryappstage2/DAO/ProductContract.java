@@ -17,7 +17,7 @@ public final class ProductContract {
         public static final String COLUMN_PRODUCT_NAME = "productName";
         public static final String COLUMN_PRODUCT_PRICE = "productPrice";
         public static final String COLUMN_PRODUCT_QUANTITY = "productQuantity";
-        public static final String COLUMN_PRODUCT_IMAGE = "productImage";
+        public static final String COLUMN_PRODUCT_IMAGE_NAME = "productImageName";
 
         public static final String COLUMN_CONTACT_NAME = "contactName";
         public static final String COLUMN_CONTACT_EMAIL = "contactEmail";
@@ -29,7 +29,7 @@ public final class ProductContract {
                         ContractEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL," +
                         ContractEntry.COLUMN_PRODUCT_PRICE + " REAL NOT NULL," +
                         ContractEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL," +
-                        ContractEntry.COLUMN_PRODUCT_IMAGE + " BLOB NOT NULL," +
+                        ContractEntry.COLUMN_PRODUCT_IMAGE_NAME + " TEXT NOT NULL," +
                         ContractEntry.COLUMN_CONTACT_NAME + " TEXT NOT NULL," +
                         ContractEntry.COLUMN_CONTACT_EMAIL + " TEXT NOT NULL," +
                         ContractEntry.COLUMN_CONTACT_PHONE + " TEXT NOT NULL)";

@@ -22,7 +22,7 @@ import java.io.InputStreamReader;
 import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_CONTACT_EMAIL;
 import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_CONTACT_NAME;
 import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_CONTACT_PHONE;
-import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_IMAGE;
+import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_IMAGE_NAME;
 import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_NAME;
 import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_PRICE;
 import static com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductContract.ContractEntry.COLUMN_PRODUCT_QUANTITY;
@@ -178,15 +178,11 @@ public class ProductDbHelper extends SQLiteOpenHelper {
     }
 
     private ContentValues productContentValues(Product product) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        product.getProductImage().compress(Bitmap.CompressFormat.PNG, 100, bos);
-        byte[] productImageByte = bos.toByteArray();
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_PRODUCT_NAME, product.getProductName());
         values.put(COLUMN_PRODUCT_PRICE, product.getProductPrice());
         values.put(COLUMN_PRODUCT_QUANTITY, product.getProductQuantity());
-        values.put(COLUMN_PRODUCT_IMAGE, productImageByte);
+        values.put(COLUMN_PRODUCT_IMAGE_NAME, product.getProductImageName());
         values.put(COLUMN_CONTACT_NAME, product.getContactName());
         values.put(COLUMN_CONTACT_EMAIL, product.getContactEmail());
         values.put(COLUMN_CONTACT_PHONE, product.getContactPhone());

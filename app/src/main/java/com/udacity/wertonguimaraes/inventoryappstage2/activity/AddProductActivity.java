@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -19,8 +18,11 @@ import android.widget.Toast;
 import com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductDbHelper;
 import com.udacity.wertonguimaraes.inventoryappstage2.R;
 import com.udacity.wertonguimaraes.inventoryappstage2.model.Product;
+import com.udacity.wertonguimaraes.inventoryappstage2.util.Image;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.UUID;
 
 public class AddProductActivity extends AppCompatActivity {
 
@@ -35,11 +37,13 @@ public class AddProductActivity extends AppCompatActivity {
     protected ImageView editProductImage;
 
     protected ProductDbHelper dbHelper;
+    private Image mImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
+        mImage = new Image(getApplicationContext());
 
         initView();
         initDatabase();
@@ -100,16 +104,7 @@ public class AddProductActivity extends AppCompatActivity {
                 return true;
             case (R.id.action_confirm_create):
                 if (allFieldsWasFilled()) {
-                    Product product = new Product(null,
-                            productName.getText().toString(),
-                            Double.parseDouble(productPrice.getText().toString()),
-                            Integer.parseInt(productQuantity.getText().toString()),
-                            ((BitmapDrawable) productImage.getDrawable()).getBitmap(),
-                            contactName.getText().toString(),
-                            contactEmail.getText().toString(),
-                            contactPhone.getText().toString());
-
-                    dbHelper.insertItem(product);
+                    saveProduct();
                     Toast.makeText(getApplicationContext(), getString(R.string.product_added_successfully), Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 } else {
@@ -122,18 +117,40 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
+    private void saveProduct() {
+        Image image = new Image(getApplicationContext());
+        String imageName = UUID.randomUUID().toString();
+        Bitmap imageBitmap = ((BitmapDrawable) productImage.getDrawable()).getBitmap();
+        image.saveToInternalStorage(imageName, imageBitmap);
+
+        Product product = new Product(null,
+                productName.getText().toString(),
+                Double.parseDouble(productPrice.getText().toString()),
+                Integer.parseInt(productQuantity.getText().toString()),
+                imageName,
+                contactName.getText().toString(),
+                contactEmail.getText().toString(),
+                contactPhone.getText().toString());
+
+        dbHelper.insertItem(product);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 0 && resultCode == RESULT_OK) {
             if (data != null) {
-
                 Uri targetUri = data.getData();
                 Bitmap bitmap;
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                    productImage.setImageBitmap(bitmap);
+                    if (mImage.isBigImage(bitmap)) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.big_image_message), Toast.LENGTH_SHORT).show();
+                    } else {
+                        productImage.setImageBitmap(bitmap);
+                    }
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

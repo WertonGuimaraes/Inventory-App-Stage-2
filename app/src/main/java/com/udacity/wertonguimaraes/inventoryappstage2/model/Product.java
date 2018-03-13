@@ -1,25 +1,23 @@
 package com.udacity.wertonguimaraes.inventoryappstage2.model;
 
-import android.graphics.Bitmap;
-
 public class Product {
     private Integer mId;
     private String mProductName;
     private double mProductPrice;
     private int mProductQuantity;
-    private Bitmap mProductImage;
+    private String mProductImageName;
     private String mContactName;
     private String mContactEmail;
     private String mContactPhone;
 
     public Product(Integer id, String productName, double productPrice, int productQuantity,
-                   Bitmap productImage, String contactName, String contactEmail,
+                   String productImageName, String contactName, String contactEmail,
                    String contactPhone) {
         mId = id;
         mProductName = productName;
         mProductPrice = productPrice;
         mProductQuantity = productQuantity;
-        mProductImage = productImage;
+        mProductImageName = productImageName;
         mContactName = contactName;
         mContactEmail = contactEmail;
         mContactPhone = contactPhone;
@@ -41,8 +39,8 @@ public class Product {
         return mProductQuantity;
     }
 
-    public Bitmap getProductImage() {
-        return mProductImage;
+    public String getProductImageName() {
+        return mProductImageName;
     }
 
     public String getContactName() {
@@ -63,10 +61,6 @@ public class Product {
 
     public void setProductPrice(double productPrice) {
         mProductPrice = productPrice;
-    }
-
-    public void setProductImage(Bitmap productImage) {
-        mProductImage = productImage;
     }
 
     public void setProductQuantity(int productQuantity) {

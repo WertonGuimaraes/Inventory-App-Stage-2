@@ -26,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mInitDatabase();
-        mInitView();
+        initDatabase();
+        initView();
         showData();
     }
 
-    private void mInitDatabase() {
+    private void initDatabase() {
         dbHelper = new ProductDbHelper(getApplicationContext());
     }
 
-    private void mInitView() {
+    private void initView() {
         mRvItem = findViewById(R.id.recycler_view);
         mInfoNoProduct = findViewById(R.id.no_product_info);
     }

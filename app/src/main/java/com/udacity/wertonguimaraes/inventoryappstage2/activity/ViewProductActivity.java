@@ -22,6 +22,7 @@ import com.udacity.wertonguimaraes.inventoryappstage2.DAO.ProductDbHelper;
 import com.udacity.wertonguimaraes.inventoryappstage2.R;
 import com.udacity.wertonguimaraes.inventoryappstage2.model.Product;
 import com.udacity.wertonguimaraes.inventoryappstage2.util.Convert;
+import com.udacity.wertonguimaraes.inventoryappstage2.util.Image;
 
 public class ViewProductActivity extends AppCompatActivity {
 
@@ -42,6 +43,7 @@ public class ViewProductActivity extends AppCompatActivity {
 
     private Product mProduct;
     private ProductDbHelper mDbHelper;
+    private Image mImage;
 
     public static void start(Context context, int productPosition) {
         Intent intent = new Intent(context, ViewProductActivity.class);
@@ -55,6 +57,7 @@ public class ViewProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_product);
+        mImage = new Image(getApplicationContext());
 
         initDatabase();
         initView();
@@ -139,7 +142,7 @@ public class ViewProductActivity extends AppCompatActivity {
         mContactName.setText(contactNameText);
         mContactEmail.setText(contactEmailText);
         mContactPhone.setText(contactPhoneText);
-        mProductImage.setImageBitmap(mProduct.getProductImage());
+        mImage.loadImageFromStorage(mProduct.getProductImageName(), mProductImage);
     }
 
     private void convertCursorToProduct() {
@@ -167,28 +170,33 @@ public class ViewProductActivity extends AppCompatActivity {
                 EditProductActivity.start(getApplicationContext(), mProduct.getId());
                 return true;
             case (R.id.action_delete):
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.add_product)
-                        .setTitle(R.string.edit_product)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                String productDeletedMessage = String.format(getString(R.string.product_deleted_message), mProduct.getProductName());
-                                mDbHelper.deleteProduct(mProduct.getId());
-                                Toast.makeText(getApplicationContext(), productDeletedMessage, Toast.LENGTH_SHORT).show();
-                                onBackPressed();
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                showDialogToDelete();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showDialogToDelete() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_product_message)
+                .setTitle(R.string.delete_product)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        String productDeletedMessage = String.format(getString(R.string.product_deleted_message), mProduct.getProductName());
+                        mDbHelper.deleteProduct(mProduct.getId());
+                        mImage.deleteImageFromStorage(mProduct.getProductImageName());
+                        Toast.makeText(getApplicationContext(), productDeletedMessage, Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

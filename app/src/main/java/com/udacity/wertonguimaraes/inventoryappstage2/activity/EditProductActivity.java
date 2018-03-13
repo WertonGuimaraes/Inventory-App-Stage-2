@@ -3,23 +3,25 @@ package com.udacity.wertonguimaraes.inventoryappstage2.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.udacity.wertonguimaraes.inventoryappstage2.R;
 import com.udacity.wertonguimaraes.inventoryappstage2.model.Product;
 import com.udacity.wertonguimaraes.inventoryappstage2.util.Convert;
+import com.udacity.wertonguimaraes.inventoryappstage2.util.Image;
 
 public class EditProductActivity extends AddProductActivity {
 
     private static final String PRODUCT_ID = "productPosition";
     private Product mProduct;
+    private Image mImage;
 
     public static void start(Context context, int productPosition) {
         Intent intent = new Intent(context, EditProductActivity.class);
@@ -32,6 +34,8 @@ public class EditProductActivity extends AddProductActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mImage = new Image(getApplicationContext());
+
         convertCursorToProduct();
         populateView();
         initButtonListeners();
@@ -52,7 +56,7 @@ public class EditProductActivity extends AddProductActivity {
         contactName.setText(mProduct.getContactName());
         contactEmail.setText(mProduct.getContactEmail());
         contactPhone.setText(mProduct.getContactPhone());
-        productImage.setImageBitmap(mProduct.getProductImage());
+        mImage.loadImageFromStorage(mProduct.getProductImageName(), productImage);
     }
 
     private void initButtonListeners() {
@@ -79,20 +83,11 @@ public class EditProductActivity extends AddProductActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case (android.R.id.home):
-                Toast.makeText(getApplicationContext()," aaa", Toast.LENGTH_SHORT).show();
                 onBackPressed();
                 return true;
             case (R.id.action_edit):
                 if (allFieldsWasFilled()) {
-                    mProduct.setProductName(productName.getText().toString());
-                    mProduct.setProductPrice(Double.parseDouble(productPrice.getText().toString()));
-                    mProduct.setProductQuantity(Integer.parseInt(productQuantity.getText().toString()));
-                    mProduct.setProductImage(((BitmapDrawable) productImage.getDrawable()).getBitmap());
-                    mProduct.setContactName(contactName.getText().toString());
-                    mProduct.setContactEmail(contactEmail.getText().toString());
-                    mProduct.setContactPhone(contactPhone.getText().toString());
-
-                    dbHelper.updateItem(mProduct);
+                    updateProduct();
                     Toast.makeText(getApplicationContext(), getString(R.string.product_edited_successfully), Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 } else {
@@ -103,5 +98,19 @@ public class EditProductActivity extends AddProductActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private void updateProduct() {
+        Bitmap imageBitmap = ((BitmapDrawable) productImage.getDrawable()).getBitmap();
+        mImage.saveToInternalStorage(mProduct.getProductImageName(), imageBitmap);
+
+        mProduct.setProductName(productName.getText().toString());
+        mProduct.setProductPrice(Double.parseDouble(productPrice.getText().toString()));
+        mProduct.setProductQuantity(Integer.parseInt(productQuantity.getText().toString()));
+        mProduct.setContactName(contactName.getText().toString());
+        mProduct.setContactEmail(contactEmail.getText().toString());
+        mProduct.setContactPhone(contactPhone.getText().toString());
+
+        dbHelper.updateItem(mProduct);
     }
 }
